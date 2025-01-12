@@ -1,0 +1,67 @@
+volumes:
+  db:
+
+services:
+  # ----------------------------------------------
+  db:
+    image: postgres:14.6-alpine3.16
+    volumes:
+      # подключаем папку для постоянного хранения данных от БД
+      - db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 # открываем порт для редактора
+    environment:
+      POSTGRES_DB                 : ${DB_NAME}
+      POSTGRES_USER               : ${DB_USER}
+      POSTGRES_PASSWORD           : ${DB_PASSWORD}
+
+  # ----------------------------------------------
+  back:
+    build: { context: ./back, target: dev }
+    stdin_open: true  # docker run -i
+    tty       : true  # docker run -t
+    volumes:
+      - ./back/:/code
+    depends_on:
+      - db
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      DEBUG       : True
+      SCHEMA      : http
+      DOMAIN      : ${DOMAIN}
+      SECRET_KEY  : ${SECRET_KEY}
+      DB_HOST     : db
+      DB_PORT     : 5432
+      DB_NAME     : ${DB_NAME}
+      DB_USER     : ${DB_USER}
+      DB_PASSWORD : ${DB_PASSWORD}
+
+  # ----------------------------------------------
+  nginx:
+    image: nginx:1.25
+    volumes:
+      # nginx.conf.template will be processed by envsubst 
+      # to replace the variables from the environment
+      # the result will be saved in /etc/nginx/nginx.conf 
+      - ./nginx.conf:/etc/nginx/templates/nginx.conf.template:ro
+    ports:
+      - 80:80
+    depends_on:
+      - back
+    environment:
+      NGINX_ENVSUBST_OUTPUT_DIR: /etc/nginx
+      DOMAIN: ${DOMAIN}
+
+  # ----------------------------------------------
+  # web:
+  #   build: { context: ./front/web, target : dev }
+  #   user: "${UID}:${GID}"
+  #   volumes:
+  #     - ./front/web:/home/node/code
+  #     # - local-cache:/home/node/.local
+  #   stdin_open: true # docker run -i
+  #   tty       : true # docker run -t
+  #   command: sh -c "yarn install && yarn dev"
+    # fix linting issues
+    # command: sh -c "yarn next lint -- --fix"
+  # ----------------------------------------------

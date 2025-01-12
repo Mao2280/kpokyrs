@@ -1,0 +1,15 @@
+# -------------------------------------------------------------------------------------------------
+# Base
+# -------------------------------------------------------------------------------------------------
+psycopg2-binary         == 2.9.10   # Python-PostgreSQL Database Adapter
+PyYAML                  == 6.0.2    # PyYAML is a YAML parser and emitter for Python.
+# -------------------------------------------------------------------------------------------------
+# Django
+# -------------------------------------------------------------------------------------------------
+Django                          == 5.1.4    #
+djangorestframework             == 3.15.2   # Web APIs for Django, made easy.
+django-allauth                  == 0.63.6   # Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication.
+django-cors-headers             == 4.6.0    # for handling the server headers required for Cross-Origin Resource Sharing (CORS).
+django-extensions               == 3.2.3    # Django Extensions is a collection of custom extensions for the Django Framework.
+drf-flex-fields                 == 1.0.2    # Flexible, dynamic fields and nested resources for Django REST Framework serializers.
+# -------------------------------------------------------------------------------------------------
