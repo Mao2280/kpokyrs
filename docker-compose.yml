@@ -53,15 +53,12 @@ services:
       DOMAIN: ${DOMAIN}
 
   # ----------------------------------------------
-  # web:
-  #   build: { context: ./front/web, target : dev }
-  #   user: "${UID}:${GID}"
-  #   volumes:
-  #     - ./front/web:/home/node/code
-  #     # - local-cache:/home/node/.local
-  #   stdin_open: true # docker run -i
-  #   tty       : true # docker run -t
-  #   command: sh -c "yarn install && yarn dev"
-    # fix linting issues
-    # command: sh -c "yarn next lint -- --fix"
+  front:
+    build: { context: ./front, target : dev }
+    volumes:
+      - ./front:/code
+    stdin_open: true # docker run -i
+    tty       : true # docker run -t
+    command: sh -c "yarn install && yarn dev"
+
   # ----------------------------------------------
