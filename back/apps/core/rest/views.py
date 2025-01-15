@@ -1,4 +1,3 @@
-import jwt
 import os
 import time
 from django.conf import settings
@@ -55,31 +54,3 @@ class MeViewSet(ViewSet):
         else:
             me['user_id'] = None
         return Response(me)
-
-
-class ConnectionJWTViewSet(ViewSet):
-    def list(self, request, format=None):
-        token_claims = {
-            'sub': str(request.user.pk),
-            'exp': int(time.time()) + 120,
-        }
-        token = jwt.encode(token_claims, settings.CENTRIFUGO_TOKEN_SECRET)
-        return Response({'token': token})
-
-
-class SubscriptionJWTViewSet(ViewSet):
-    def list(self, request, format=None):
-        channel = request.GET.get('channel')
-        if not (
-            (channel.startswith("admin") and request.user.is_staff) 
-         or (channel.startswith("user")  and channel == f'user:{request.user.pk}')
-         ):
-            return Response({'detail': 'permission denied'}, status=403)
-
-        token_claims = {
-            'sub': str(request.user.pk),
-            'exp': int(time.time()) + 120,
-            'channel': channel,
-        }
-        token = jwt.encode(token_claims, settings.CENTRIFUGO_TOKEN_SECRET)
-        return Response({'token': token})

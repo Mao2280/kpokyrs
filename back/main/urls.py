@@ -4,8 +4,10 @@ from django.conf.urls.static import static
 from django.http import JsonResponse
 from django.urls import path, include
 from rest_framework import routers
+from apps.employee.rest.router import employee
 
 router = routers.DefaultRouter(trailing_slash=True)
+employee(router)
 
 urlpatterns = [
     path('healthcheck'          , lambda request: JsonResponse({'status': 'OK'}), name='healthcheck'),

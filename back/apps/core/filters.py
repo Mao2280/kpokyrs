@@ -15,7 +15,7 @@ class FilterBackend(filters.BaseFilterBackend):
             elif field == '__offset':
                 offset = query_params.get('__offset')
             elif field in ['__relations', '__fields', '__omit', ]:
-                # ignore it, it is handled by drf-flex-fields
+                # игнорируйте, это обрабатывается drf-flex-fields
                 continue
             else:
                 value = value[0]

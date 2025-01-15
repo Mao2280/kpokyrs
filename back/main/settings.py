@@ -1,6 +1,6 @@
 import os, sys
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Построить пути внутри проекта следующим образом: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SITE_ID = 1
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    # external apps
+    # внешние приложения
     "corsheaders",
     'django_extensions',
     'rest_framework',
@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     # 'allath.socialaccount.providers.openid_connect',
-    # internal apps
-    'apps.core'
+    # внутренние приложения
+    'apps.core',
+    'apps.employee',
 ]
 
 
@@ -165,18 +166,18 @@ EMAIL_PORT          = int(os.getenv('EMAIL_PORT', '587'))
 EMAIL_USE_TLS       =     os.getenv('EMAIL_USE_TLS') == 'True'
 EMAIL_HOST_USER     =     os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =     os.getenv('EMAIL_HOST_PASSWORD')
-# Default email address to use for various automated correspondence from the site manager(s).
-# This doesn’t include error messages sent to ADMINS and MANAGERS;
-# for that, see SERVER_EMAIL.
+# Адрес электронной почты по умолчанию для использования в различных автоматических сообщениях от менеджера(ов) сайта.
+# Сюда не входят сообщения об ошибках, отправляемые ADMINS и MANAGERS;
+# для этого см. SERVER_EMAIL.
 DEFAULT_FROM_EMAIL      = os.getenv('DEFAULT_FROM_EMAIL')
 # DEFAULT_REPLY_TO_EMAIL  = list(filter(None, os.environ.get('DEFAULT_REPLY_TO_EMAIL', '').split(' ')))
 DEFAULT_REPLY_TO_EMAIL  = os.getenv('DEFAULT_REPLY_TO_EMAIL')
-# The email address that error messages come from, such as those sent to ADMINS and MANAGERS.
+# Адрес электронной почты, с которого приходят сообщения об ошибках, например, отправляемые ADMINS и MANAGERS.
 SERVER_EMAIL        = os.getenv('SERVER_EMAIL')
-# A list of all the people who get code error notifications (when DEBUG=False)
+# Список всех людей, которые получают уведомления об ошибках кода (когда DEBUG=False)
 ADMINS              = [tuple(i.split('=')) for i in os.getenv('ADMINS', '').split(' ')]
-# A list in the same format as ADMINS that specifies who should get broken link notifications
-# when BrokenLinkEmailsMiddleware is enabled.
+# Список в том же формате, что и ADMINS, который указывает, кто должен получать уведомления о неработающих ссылках
+# когда включен BrokenLinkEmailsMiddleware.
 MANAGERS            = [tuple(i.split('=')) for i in os.getenv('MANAGERS', '').split(' ')]
 
 REST_FLEX_FIELDS = {

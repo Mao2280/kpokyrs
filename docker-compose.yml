@@ -40,9 +40,9 @@ services:
   nginx:
     image: nginx:1.25
     volumes:
-      # nginx.conf.template will be processed by envsubst 
-      # to replace the variables from the environment
-      # the result will be saved in /etc/nginx/nginx.conf 
+      # nginx.conf.template будет обработан envsubst
+      # для замены переменных из среды
+      # результат будет сохранен в /etc/nginx/nginx.conf
       - ./nginx.conf:/etc/nginx/templates/nginx.conf.template:ro
     ports:
       - 80:80
